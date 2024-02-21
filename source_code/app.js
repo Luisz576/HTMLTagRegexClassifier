@@ -1,7 +1,5 @@
 const Finder = require('./finder')
 const Classifier = require('./classifier')
-const classesData = require('./classes')
-const regex = require('./regex')
 const fs = require('fs')
 const readline = require('readline')
 const r = readline.createInterface(process.stdin, process.stdout)
@@ -13,20 +11,33 @@ r.question("Informe o arquivo que será lido (com a extensão): ", run)
 function run(filename){
     const readStream = fs.createReadStream(filename)
     var data = ""
-    readStream.on('data', function(chunk) {
+    readStream.on('data', (chunk) => {
         data += chunk.toString('utf8')
     });
+    readStream.on('error', (error) => {
+        console.error(error)
+        r.close()
+    });
     readStream.on('end', () => {
-        console.log(data)
-        const finder = new Finder(regex)
-        const classifier = new Classifier(classesData)
+        const finder = new Finder()
+        const classifier = new Classifier()
         const values = finder.find(data)
-        for(let v in values){
-            const c = classifier.classify(v)
-            if(c == -1){
-                continue
+        if(values != null && values.length > 0){
+            var some = false
+            for(let i in values){
+                const v = values[i]
+                const c = classifier.classify(v)
+                if(c == -1){
+                    continue
+                }
+                some = true
+                console.log("'" + v + "' => '" + c.name + "'")
             }
-            console.log("'" + c + "' => '" + c + "'")
+            if(!some){
+                console.log("Nenhuma Tag foi classificada!")
+            }
+        }else{
+            console.log("Nenhuma Tag foi encontrada!")
         }
         r.question('Enter para sair.', (_)=>{})
         r.close()

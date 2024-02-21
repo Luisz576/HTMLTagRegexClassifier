@@ -5,7 +5,8 @@ function cClass(value, name){
 }
 
 const classesData = [
-    cClass("<html", "HTML Tag")
+    cClass("<html", "HTML Tag"),
+    cClass("<!doctype", "DOCTYPE Tag")
 ]
 
 module.exports = classesData

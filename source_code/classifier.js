@@ -1,12 +1,10 @@
-class Classifier{
-    constructor(classes){
-        this.classes = classes
-    }
+const classes = require('./classes')
 
-    classify(value){
+class Classifier{
+    classify(value) {
         for(let c in classes){
-            if(value.toLowerCase().startsWith(c.value)){
-                return c
+            if(classes[c].compare(value)){
+                return classes[c]
             }
         }
         return -1
