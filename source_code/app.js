@@ -23,17 +23,17 @@ function run(filename){
         const classifier = new Classifier()
         const values = finder.find(data)
         if(values != null && values.length > 0){
-            var some = false
+            var something = false
             for(let i in values){
                 const v = values[i]
                 const c = classifier.classify(v)
                 if(c == -1){
                     continue
                 }
-                some = true
+                something = true
                 console.log("'" + v + "' => '" + c.name + "'")
             }
-            if(!some){
+            if(!something){
                 console.log("Nenhuma Tag foi classificada!")
             }
         }else{
