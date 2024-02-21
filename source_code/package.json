@@ -1,0 +1,11 @@
+{
+  "name": "tregex",
+  "version": "1.0.0",
+  "description": "Trabalho de Regex",
+  "main": "app.js",
+  "author": "Luisz576",
+  "license": "MIT",
+  "scripts": {
+    "dev": "node app"
+  }
+}
